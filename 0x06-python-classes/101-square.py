@@ -4,9 +4,10 @@
 
 class Square:
     """Square class"""
-    def __init__(self, size=0):
+    def __init__(self, size=0, position=(0, 0)):
         """Constructor"""
         self.size = size
+        self.position = position
 
     def area(self):
         """Area of a square"""
@@ -20,32 +21,53 @@ class Square:
     @size.setter
     def size(self, value):
         """Setter function for __size"""
-        if not isinstance(value, int) and not isinstance(value, float):
-            raise TypeError("size must be a number")
+        if not isinstance(value, int):
+            raise TypeError("size must be an integer")
         if value < 0:
             raise ValueError("size must be >= 0")
         self.__size = value
 
-    def __eq__(self, other):
-        """Greater or equal"""
-        return (self.area() == other.area())
+    @property
+    def position(self):
+        """Getter for __position"""
+        return self.__position
 
-    def __ne__(self, other):
-        """Greater or equal"""
-        return (self.area() != other.area())
+    @position.setter
+    def position(self, value):
+        """Getter for __position"""
+        if not isinstance(value, tuple) or len(value) != 2:
+            raise TypeError("position must be a tuple of 2 positive integer")
+        if any(not isinstance(num, int) for num in value):
+            raise TypeError("position must be a tuple of 2 positive integer")
+        if any(num < 0 for num in value):
+            raise TypeError("position must be a tuple of 2 positive integer")
+        self.__position = value
 
-    def __lt__(self, other):
-        """Greater or equal"""
-        return (self.area() < other.area())
+    def my_print(self):
+        """Prints square with #"""
+        if self.__size == 0:
+            print()
+            return
+        for _ in range(self.__position[1]):
+            print()
+        for _ in range(self.__size):
+            for _ in range(self.__position[0]):
+                print(" ", end="")
+            for _ in range(self.__size):
+                print("#", end="")
+            print()
 
-    def __le__(self, other):
-        """Greater or equal"""
-        return (self.area() <= other.area())
-
-    def __gt__(self, other):
-        """Greater or equal"""
-        return (self.area() > other.area())
-
-    def __ge__(self, other):
-        """Greater or equal"""
-        return (self.area() >= other.area())
+    def __str__(self):
+        """String method"""
+        s = ""
+        if self.__size == 0:
+            return s
+        for _ in range(self.position[1]):
+            s += '\n'
+        for _ in range(self.__size):
+            for _ in range(self.__position[0]):
+                s += " "
+            for _ in range(self.__size):
+                s += '#'
+            s += '\n'
+        return s[:-1]
