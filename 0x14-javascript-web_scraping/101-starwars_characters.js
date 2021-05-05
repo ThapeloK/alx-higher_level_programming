@@ -14,7 +14,7 @@ function printPeople (people, index) {
   });
 }
 
-request('https://swapi.co/api/films/' + process.argv[2], function (error, response, body) {
+request('https://swapi-api.hbtn.io/api/films/' + process.argv[2], function (error, response, body) {
   if (error) console.log(error);
   const film = JSON.parse(body);
   const characters = film.characters;
